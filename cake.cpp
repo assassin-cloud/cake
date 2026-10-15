@@ -5,7 +5,7 @@ using namespace std;
 
 void mainmenu(){
     cout << "+=======================+" << endl;
-    cout << "+    RECIEPT CREATOR    +" << endl;
+    cout << "+    RECEIPT CREATOR    +" << endl;
     cout << "+=======================+" << endl;
     cout << "1. Create Reciept" << endl;
     cout << "2. Exit" << endl;
@@ -24,7 +24,7 @@ void cinbugfix(){
     cin.ignore(1000, '\n');
 }
 
-void reciept(string name, int amount, string item){
+void receipt(string name, int amount, string item){
     int sizeofname = string("Name: ").size() + name.size();
     int sizeofitem = string("Item Bought: ").size() + item.size();
     int sizeofamount = string("Amount: $").size() + to_string(amount).size();
@@ -40,7 +40,7 @@ void reciept(string name, int amount, string item){
     }
     cout << "|" << setfill('-') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
-    cout << "|" << left << setw(width) << "RECIEPT" << "|" << endl;
+    cout << "|" << left << setw(width) << "RECEIPT" << "|" << endl;
     cout << "|" << left << setw(width) << string("Name: " + name) << "|" << endl;
     cout << "|" << left << setw(width) << string("Item Bought: " + item) << "|" << endl;
     cout << "|" << left << setw(width) << string("Amount: $" + to_string(amount)) << "|" << endl;
@@ -86,7 +86,7 @@ int main(){
                             cout << "Amount can't be negative or zero" << endl;
                         }
                         else{
-                            reciept(name, amount, item1);
+                            receipt(name, amount, item1);
                             wait();
                         }
                     }
