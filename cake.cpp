@@ -24,7 +24,7 @@ void cinbugfix(){
     cin.ignore(1000, '\n');
 }
 
-void receipt(string name, int amount, string item){
+void receipt(string name, double amount, string item){
     int sizeofname = string("Name: ").size() + name.size();
     int sizeofitem = string("Item Bought: ").size() + item.size();
     int sizeofamount = string("Amount: $").size() + to_string(amount).size();
@@ -81,7 +81,8 @@ int main(){
                     }
                     else{
                         cout << "Input amount:" << endl;
-                        int amount {takeinput()};
+                        double amount {};
+                        cin >> amount;
                         if(amount <= 0){
                             cout << "Amount can't be negative or zero" << endl;
                         }
