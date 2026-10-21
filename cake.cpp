@@ -41,9 +41,9 @@ void receipt(string name, double amount, string item){
     cout << "|" << setfill('-') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     cout << "|" << left << setw(width) << "RECEIPT" << "|" << endl;
-    cout << "|" << left << setw(width) << string("Name: " + name) << "|" << endl;
-    cout << "|" << left << setw(width) << string("Item Bought: " + item) << "|" << endl;
-    cout << "|" << left << setw(width) << string("Amount: $" + to_string(amount)) << "|" << endl;
+    cout << "|" << left << setw(width) << "Name: " + name << "|" << endl;
+    cout << "|" << left << setw(width) << "Item Bought: " + item << "|" << endl;
+    cout << "|" << left << setw(width) << "Amount: $" + to_string(amount) << "|" << endl;
     cout << "|" << setfill('-') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ') << endl;
     delete[] p;
