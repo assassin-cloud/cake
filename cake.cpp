@@ -24,16 +24,23 @@ void cinbugfix(){
     cin.ignore(1000, '\n');
 }
 
-void receipt(string name, double amount, string item){
+void receipt(string name, double amount, string ptr[], int numberofitem){
     int sizeofname = string("Name: ").size() + name.size();
-    int sizeofitem = string("Item Bought: ").size() + item.size();
+    int sizeofitem = string("Items Bought: ").size();
     int sizeofamount = string("Amount: $").size() + to_string(amount).size();
-    int *p = new int[3];
+    int maxsizeofitem {};
+    for(int i=0;i<numberofitem;i++){
+        if(ptr[i].size()>maxsizeofitem){
+            maxsizeofitem = ptr[i].size();
+        }
+    }
+    int *p = new int[4];
     int width {};
     p[0] = sizeofname;
     p[1] = sizeofitem;
     p[2] = sizeofamount;
-    for(int i=0;i<3;i++){
+    p[3] = maxsizeofitem;
+    for(int i=0;i<4;i++){
         if(p[i]>width){
             width = p[i];
         }
@@ -42,7 +49,10 @@ void receipt(string name, double amount, string item){
     cout << setfill(' ');
     cout << "|" << left << setw(width) << "RECEIPT" << "|" << endl;
     cout << "|" << left << setw(width) << "Name: " + name << "|" << endl;
-    cout << "|" << left << setw(width) << "Item Bought: " + item << "|" << endl;
+    cout << "|" << left << setw(width) << "Items Bought: " << "|" << endl;
+    for(int i=0;i<numberofitem;i++){
+        cout << "|" << left << setw(width) << ptr[i] << "|" << endl;
+    }
     cout << "|" << left << setw(width) << "Amount: $" + to_string(amount) << "|" << endl;
     cout << "|" << setfill('-') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ') << endl;
@@ -73,23 +83,39 @@ int main(){
                     cout << "Name cannot be empty" << endl;
                 }
                 else{
-                    cout << "Input Name of item:" << endl;
-                    string item1;
-                    getline(cin,item1);
-                    if(item1.empty()){
-                        cout << "Name of item cannot be empty" << endl;
+                    cout << "How many items bought:" << endl;
+                    int numberofitem {};
+                    cin >> numberofitem;
+                    if(numberofitem <= 0){
+                        cout << "Number of items can't be negative or zero!" << endl;
                     }
                     else{
-                        cout << "Input amount:" << endl;
-                        double amount {};
-                        cin >> amount;
-                        if(amount <= 0){
-                            cout << "Amount can't be negative or zero" << endl;
+                        string *p = new string[numberofitem];
+                        bool itemempty {false};
+                        cin.ignore(1000,'\n');
+                        for(int i=0;i<numberofitem;i++){
+                            cout << "Type the name of item:" << endl;
+                            getline(cin,p[i]);
+                            if(p[i].empty()){
+                                cout << "Name of item can't be empty!" << endl;
+                                itemempty = true;
+                                break;
+                            }
                         }
-                        else{
-                            receipt(name, amount, item1);
-                            wait();
+                        if(!(itemempty)){
+                            cout << "Input the total amount:" << endl;
+                            double amount {};
+                            cin >> amount;
+                            if(amount < 0){
+                                cout << "Total amount can't be negative!" << endl;
+                            }
+                            else{
+                                receipt(name, amount, p, numberofitem);
+                                wait();
+                            }
                         }
+                        delete[] p;
+                        p = nullptr;
                     }
                 }
             }
