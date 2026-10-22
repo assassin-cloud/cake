@@ -24,14 +24,14 @@ void cinbugfix(){
     cin.ignore(1000, '\n');
 }
 
-void receipt(string name, double amount, string ptr[], int numberofitem){
+void receipt(string name, double amount, string ptr[], double cost[],int numberofitem){
     int sizeofname = string("Name: ").size() + name.size();
     int sizeofitem = string("Items Bought: ").size();
-    int sizeofamount = string("Amount: $").size() + to_string(amount).size();
+    int sizeofamount = string("Total Amount: $").size() + to_string(amount).size();
     int maxsizeofitem {};
     for(int i=0;i<numberofitem;i++){
-        if(ptr[i].size()>maxsizeofitem){
-            maxsizeofitem = ptr[i].size();
+        if(string(to_string(i+1) + '.' + ptr[i] + ": " + "$" + to_string(cost[i])).size()>maxsizeofitem){
+            maxsizeofitem = string(to_string(i+1) + '.' + ptr[i] + ": " + "$" + to_string(cost[i])).size();
         }
     }
     int *p = new int[4];
@@ -49,15 +49,15 @@ void receipt(string name, double amount, string ptr[], int numberofitem){
     cout << setfill(' ');
     cout << "|" << left << setw(width) << "RECEIPT" << "|" << endl;
     cout << "|" << left << setw(width) << "Name: " + name << "|" << endl;
-    cout << "|" << left << setw(width) << "Items: " << "|" << endl;
+    cout << "|" << left << setw(width-6) << "Items:" << right << "Cost: " << "|" << endl;
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     for(int i=0;i<numberofitem;i++){
-        cout << "|" << left << setw(width) << string(to_string(i+1) + '.' + ptr[i]) << "|" << endl;
+        cout << "|" << left << setw(width) << string(to_string(i+1) + '.' + ptr[i] + ": " + "$" + to_string(cost[i])) << "|" << endl;
     }
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
-    cout << "|" << left << setw(width) << "Total Amount: $" + to_string(amount) << "|" << endl;
+    cout << "|" << left << setw(width) << string("Total Amount: $" + to_string(amount)) << "|" << endl;
     cout << "|" << setfill('-') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ') << endl;
     delete[] p;
@@ -107,16 +107,25 @@ int main(){
                             }
                         }
                         if(!(itemempty)){
-                            cout << "Input the total amount:" << endl;
+                            double *ptr = new double[numberofitem];
+                            bool canrun {true};
                             double amount {};
-                            cin >> amount;
-                            if(amount < 0){
-                                cout << "Total amount can't be negative!" << endl;
+                            for(int i=0;i<numberofitem;i++){
+                                cout << "Input the cost of " << p[i] << ":" << endl;
+                                cin >> ptr[i];
+                                if(cin.fail()){
+                                    cinbugfix();
+                                    canrun = false;
+                                    break;
+                                }
+                                amount += ptr[i];
                             }
-                            else{
-                                receipt(name, amount, p, numberofitem);
+                            if(canrun){
+                                receipt(name, amount, p, ptr, numberofitem);
                                 wait();
                             }
+                            delete[] ptr;
+                            ptr = nullptr;
                         }
                         delete[] p;
                         p = nullptr;
