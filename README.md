@@ -3,7 +3,7 @@
 <p align="center">
   <strong>A simple console-based receipt generator written in C++</strong>
   <br>
-  Built to practice C++ programming, input validation, and console formatting.
+  Built to practice C++ programming, dynamic memory allocation, input validation, and console formatting.
 </p>
 
 <p align="center">
@@ -15,95 +15,154 @@
 
 ## ✨ Features
 
-- 🧾 Generate formatted receipts.
-- 👤 Enter customer and item names.
-- 💰 Accept decimal amounts.
-- 📏 Calculate receipt width dynamically.
-- 🛡️ Validate empty names and non-positive amounts.
-- 🔁 Simple interactive menu.
+- 🧾 Generate formatted receipts directly in the console.
+- 👤 Enter a customer's name.
+- 🛒 Add multiple items to a single receipt.
+- 💰 Enter individual item prices using decimal amounts.
+- ➕ Automatically calculate the total amount.
+- 📏 Dynamically adjust receipt width based on the content.
+- 🛡️ Validate empty customer and item names.
+- ⚠️ Detect invalid numeric input for menu selections and item prices.
+- 🔁 Use a simple interactive menu to create receipts or exit.
+- 🧹 Manage dynamically allocated arrays for item names and prices.
 
 ## ⚙️ Requirements
 
-- C++ compiler (GCC, Clang, or MSVC).
+- A C++ compiler, such as GCC, Clang, or MSVC.
 - C++11 or newer.
+- A terminal or command-line interface.
 
 ## 📥 Installation & Build
 
-Clone the repository:
+### 1. Clone the repository
 
-```bash
+~~~bash
 git clone <repository-url>
 cd Receipt-Creator
-```
+~~~
 
-Compile with GCC:
+Replace `<repository-url>` with the URL of your Git repository.
 
-```bash
+### 2. Compile the program
+
+Using GCC:
+
+~~~bash
 g++ main.cpp -std=c++11 -Wall -Wextra -o receipt
-```
+~~~
 
-Run the program:
+### 3. Run the program
 
 **Linux / macOS**
-```bash
+
+~~~bash
 ./receipt
-```
+~~~
 
 **Windows**
-```powershell
+
+~~~powershell
 .\receipt.exe
-```
+~~~
 
-## 🖥️ Example Output
+## 🖥️ Example Usage
 
-```text
+### Main Menu
+
+~~~text
 +=======================+
 +    RECEIPT CREATOR    +
 +=======================+
 1. Create Reciept
 2. Exit
 Input:
-```
+~~~
 
-Example receipt:
+### Creating a Receipt
 
-```text
+For example, suppose a customer named John buys a keyboard and a mouse.
+
+~~~text
+Input Name:
+John
+How many items bought:
+2
+Type the name of item:
+Keyboard
+Type the name of item:
+Mouse
+Input the cost of Keyboard:
+50
+Input the cost of Mouse:
+25
+~~~
+
+### Example Receipt
+
+~~~text
 |----------------------|
 |RECEIPT               |
-|Name: John             |
-|Item Bought: Keyboard  |
-|Amount: $50.000000     |
+|Name: John            |
+|Items:          Cost: |
+|**********************|
+|1.Keyboard: $50.000000|
+|2.Mouse: $25.000000   |
+|**********************|
+|Total Amount: $75.000000|
 |----------------------|
-```
+~~~
 
-> **Note:** The amount currently uses `std::to_string()`, which typically displays six decimal places.
+> **Note:** The exact alignment and receipt width depend on the entered names and prices. The amounts currently use `std::to_string()`, which typically displays six decimal places. Spacing in this illustrative output may differ from the actual output.
 
 ## 📁 Project Structure
 
-```text
+~~~text
 Receipt-Creator/
 ├── main.cpp
 └── README.md
-```
+~~~
 
-## ⚠️ Limitations
+- `main.cpp` — Contains the menu, input handling, receipt generation, and total calculation.
+- `README.md` — Provides project documentation and build instructions.
 
-- Receipts are not saved to files.
-- Invalid monetary input needs better handling.
-- Currency formatting is not limited to two decimal places.
+## 🧠 Concepts Practiced
+
+- **Functions:** Separating menu display, input handling, receipt generation, and waiting for user input.
+- **Strings:** Using `std::string` and `getline()` to read customer and item names.
+- **Arrays and pointers:** Storing item names and prices in dynamically allocated arrays.
+- **Dynamic memory management:** Allocating arrays with `new[]` and releasing them with `delete[]`.
+- **Input validation:** Checking stream errors and rejecting empty names and non-positive item counts.
+- **Arithmetic operations:** Calculating the total cost of all items.
+- **Console formatting:** Using `std::setw()`, `std::setfill()`, `std::left`, and `std::right`.
+- **Loops and conditionals:** Managing the interactive menu and processing multiple items.
+
+## ⚠️ Current Limitations
+
+- Receipts are displayed in the console and are not saved to files.
+- Monetary values display six decimal places instead of standard two-decimal currency formatting.
+- Negative item prices are not explicitly rejected.
+- Invalid input for the number of items is not fully handled.
+- Very large item counts can cause excessive memory allocation.
+- Dynamic arrays could be replaced with `std::vector` for safer memory management.
+- Taxes, discounts, and configurable currencies are not supported.
+- The menu contains the spelling `Reciept` instead of `Receipt`.
 
 ## 🚀 Future Improvements
 
-- [ ] Format amounts to two decimal places.
-- [ ] Adding cost to items.
-- [ ] Adding discount and tax.
-- [ ] Save receipts to files.
-- [ ] Improve input validation.
+- [ ] Format monetary values to exactly two decimal places.
+- [ ] Reject negative and invalid item prices.
+- [ ] Improve validation for the number of items.
+- [ ] Replace dynamic arrays with `std::vector`.
+- [ ] Save generated receipts to text files.
 - [ ] Add tax and discount calculations.
+- [ ] Include receipt dates and receipt numbers.
+- [ ] Allow users to edit or remove items.
+- [ ] Improve the receipt layout and menu interface.
+- [ ] Correct spelling mistakes in the interface.
 
 ## 📄 License
 
-No license has been specified yet.
+No license has been specified yet. Add a license file if you intend to distribute or reuse the project publicly.
 
 ---
 
@@ -112,4 +171,3 @@ No license has been specified yet.
   <br>
   <sub>Made with C++ for learning and practice.</sub>
 </p>
-````
