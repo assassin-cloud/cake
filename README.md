@@ -89,13 +89,14 @@ Receipt-Creator/
 ## ⚠️ Limitations
 
 - Receipts are not saved to files.
-- bad formatting of items.
 - Invalid monetary input needs better handling.
 - Currency formatting is not limited to two decimal places.
 
 ## 🚀 Future Improvements
 
 - [ ] Format amounts to two decimal places.
+- [ ] Adding cost to items.
+- [ ] Adding discount and tax.
 - [ ] Save receipts to files.
 - [ ] Improve input validation.
 - [ ] Add tax and discount calculations.
