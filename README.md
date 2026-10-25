@@ -157,10 +157,6 @@ Receipt-Creator/
 - [ ] Allow users to edit or remove items.
 - [ ] Improve the receipt layout and menu interface.
 
-## 📄 License
-
-No license has been specified yet. Add a license file if you intend to distribute or reuse the project publicly.
-
 ---
 
 <p align="center">
