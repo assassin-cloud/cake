@@ -140,12 +140,10 @@ Receipt-Creator/
 
 - Receipts are displayed in the console and are not saved to files.
 - Monetary values display six decimal places instead of standard two-decimal currency formatting.
-- Negative item prices are not explicitly rejected.
 - Invalid input for the number of items is not fully handled.
 - Very large item counts can cause excessive memory allocation.
 - Dynamic arrays could be replaced with `std::vector` for safer memory management.
 - Taxes, discounts, and configurable currencies are not supported.
-- The menu contains the spelling `Reciept` instead of `Receipt`.
 
 ## 🚀 Future Improvements
 
@@ -158,7 +156,6 @@ Receipt-Creator/
 - [ ] Include receipt dates and receipt numbers.
 - [ ] Allow users to edit or remove items.
 - [ ] Improve the receipt layout and menu interface.
-- [ ] Correct spelling mistakes in the interface.
 
 ## 📄 License
 

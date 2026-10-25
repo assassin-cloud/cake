@@ -7,7 +7,7 @@ void mainmenu(){
     cout << "+=======================+" << endl;
     cout << "+    RECEIPT CREATOR    +" << endl;
     cout << "+=======================+" << endl;
-    cout << "1. Create Reciept" << endl;
+    cout << "1. Create Receipt" << endl;
     cout << "2. Exit" << endl;
     cout << "Input:" << endl;
 }
@@ -49,11 +49,11 @@ void receipt(string name, double amount, string ptr[], double cost[],int numbero
     cout << setfill(' ');
     cout << "|" << left << setw(width) << "RECEIPT" << "|" << endl;
     cout << "|" << left << setw(width) << "Name: " + name << "|" << endl;
-    cout << "|" << left << setw(width-6) << "Items:" << right << "Cost: " << "|" << endl;
+    cout << "|" << left << setw(width-string("Cost: ").size()) << "Items:" << right << "Cost: " << "|" << endl;
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     for(int i=0;i<numberofitem;i++){
-        cout << "|" << left << setw(width) << string(to_string(i+1) + '.' + ptr[i] + ": " + "$" + to_string(cost[i])) << "|" << endl;
+        cout << "|" << left << setw(width-string("$" + to_string(cost[i])).size()) << string(to_string(i+1) + '.' + ptr[i] + ": ") << right << string("$" + to_string(cost[i])) << "|" << endl;
     }
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
@@ -118,7 +118,14 @@ int main(){
                                     canrun = false;
                                     break;
                                 }
-                                amount += ptr[i];
+                                else if(ptr[i] < 0){
+                                    cout << "Price/cost of item can't be negative!" << endl;
+                                    canrun = false;
+                                    break;
+                                }
+                                else{
+                                    amount += ptr[i];
+                                }
                             }
                             if(canrun){
                                 receipt(name, amount, p, ptr, numberofitem);
