@@ -143,16 +143,15 @@ Receipt-Creator/
 - Invalid input for the number of items is not fully handled.
 - Very large item counts can cause excessive memory allocation.
 - Dynamic arrays could be replaced with `std::vector` for safer memory management.
-- Taxes, discounts, and configurable currencies are not supported.
+- Taxes and configurable currencies are not supported.
 
 ## 🚀 Future Improvements
 
 - [ ] Format monetary values to exactly two decimal places.
-- [ ] Reject negative and invalid item prices.
 - [ ] Improve validation for the number of items.
 - [ ] Replace dynamic arrays with `std::vector`.
 - [ ] Save generated receipts to text files.
-- [ ] Add tax and discount calculations.
+- [ ] Add tax calculations.
 - [ ] Include receipt dates and receipt numbers.
 - [ ] Allow users to edit or remove items.
 - [ ] Improve the receipt layout and menu interface.

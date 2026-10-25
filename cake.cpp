@@ -24,9 +24,8 @@ void cinbugfix(){
     cin.ignore(1000, '\n');
 }
 
-void receipt(string name, double amount, string ptr[], double cost[],int numberofitem){
+void receipt(string name, double amount, string ptr[], double cost[],int numberofitem, double discount[], double originalprice[]){
     int sizeofname = string("Name: ").size() + name.size();
-    int sizeofitem = string("Items Bought: ").size();
     int sizeofamount = string("Total Amount: $").size() + to_string(amount).size();
     int maxsizeofitem {};
     for(int i=0;i<numberofitem;i++){
@@ -34,26 +33,29 @@ void receipt(string name, double amount, string ptr[], double cost[],int numbero
             maxsizeofitem = string(to_string(i+1) + '.' + ptr[i] + ": " + "$" + to_string(cost[i])).size();
         }
     }
-    int *p = new int[4];
+    int *p = new int[3];
     int width {};
     p[0] = sizeofname;
-    p[1] = sizeofitem;
-    p[2] = sizeofamount;
-    p[3] = maxsizeofitem;
-    for(int i=0;i<4;i++){
+    p[1] = sizeofamount;
+    p[2] = maxsizeofitem;
+    for(int i=0;i<3;i++){
         if(p[i]>width){
             width = p[i];
         }
     }
+    width+=string("Discounted Price:").size();
     cout << "|" << setfill('-') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     cout << "|" << left << setw(width) << "RECEIPT" << "|" << endl;
     cout << "|" << left << setw(width) << "Name: " + name << "|" << endl;
-    cout << "|" << left << setw(width-string("Cost: ").size()) << "Items:" << right << "Cost: " << "|" << endl;
+    cout << "|" << left << setw(width-string("Cost:").size()) << "Items:" << right << "Cost:" << "|" << endl;
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     for(int i=0;i<numberofitem;i++){
-        cout << "|" << left << setw(width-string("$" + to_string(cost[i])).size()) << string(to_string(i+1) + '.' + ptr[i] + ": ") << right << string("$" + to_string(cost[i])) << "|" << endl;
+        cout << "|" << left << setw(width-string("$" + to_string(originalprice[i])).size()) << string(to_string(i+1) + '.' + ptr[i] + ":") << right << string("$" + to_string(originalprice[i])) << "|" << endl;
+        cout << "|" << left << setw(width-string(to_string(discount[i]) + '%').size()) << "Discount:" << right << string(to_string(discount[i]) + '%') << "|" << endl;
+        cout << "|" << left << setw(width-string('$' + to_string(cost[i])).size()) << "Discounted Price:" << right << string('$' + to_string(cost[i])) << "|" << endl;
+        cout << "|" << setw(width+1) << "|" << endl;
     }
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
@@ -110,6 +112,7 @@ int main(){
                             double *ptr = new double[numberofitem];
                             bool canrun {true};
                             double amount {};
+                            double discount {};
                             for(int i=0;i<numberofitem;i++){
                                 cout << "Input the cost of " << p[i] << ":" << endl;
                                 cin >> ptr[i];
@@ -123,13 +126,54 @@ int main(){
                                     canrun = false;
                                     break;
                                 }
-                                else{
-                                    amount += ptr[i];
-                                }
                             }
                             if(canrun){
-                                receipt(name, amount, p, ptr, numberofitem);
+                                double* originalprice = new double[numberofitem];
+                                double* discount = new double[numberofitem];
+                                for(int i=0;i<numberofitem;i++){
+                                    originalprice[i] = ptr[i];
+                                }
+                                while(true){
+                                    cout << "Does any item have discount(y) or no discount(n):" << endl;
+                                    char inputfromuser;
+                                    cin >> inputfromuser;
+                                    if(cin.fail()){
+                                        cinbugfix();
+                                    }
+                                    else{
+                                        if(inputfromuser == 'y'){
+                                            for(int i=0;i<numberofitem;i++){
+                                                cout << i+1 << "." << p[i] << endl;
+                                            }
+                                            cout << "Input the index of item which you wanna add discount to:" << endl;
+                                            int indexofitem {takeinput()};
+                                            if(indexofitem<1 || indexofitem>numberofitem){
+                                                cout << "Invalid index!" << endl;
+                                            }
+                                            else{
+                                                indexofitem-=1;
+                                                cout << "Input the discount percentage e.g 10%(don't include percentage sign in input just type e.g 10):" << endl;
+                                                cin >> discount[indexofitem];
+                                                if(discount[indexofitem] <= 0 || discount[indexofitem] > 100){
+                                                    cout << "Discount can't be greater than 100 or less than or equal to 0" << endl;
+                                                }
+                                                else{
+                                                    ptr[indexofitem] *= (1.0-(discount[indexofitem]/100.0));
+                                                }
+                                            }
+                                        }
+                                        else if(inputfromuser == 'n'){
+                                            break;
+                                        }
+                                    }
+                                }
+                                for(int i=0;i<numberofitem;i++){
+                                    amount+=ptr[i];
+                                }
+                                receipt(name, amount, p, ptr, numberofitem, discount, originalprice);
                                 wait();
+                                delete[] originalprice;
+                                originalprice = nullptr;
                             }
                             delete[] ptr;
                             ptr = nullptr;
