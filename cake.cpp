@@ -41,11 +41,11 @@ void cinbugfix(){
 }
 
 void receipt(string name, double amount, string ptr[], double cost[],int numberofitem, double discount[], double originalprice[], double taxrate, double taxamount, double grandtotal, char taxuserinput, string str){
-    int sizeofname = string("Name: ").size() + name.size();
-    int sizeofamount = string("Subtotal: " + str).size() + to_string(amount).size();
+    int sizeofname = string("Name: " + name).size();
+    int sizeofamount = string("Subtotal: " + str + to_string(amount)).size();
     int sizeoftax = string("Tax Rate: " + to_string(taxrate) + "%").size();
-    int sizeoftaxamount = string("Tax Amount: " + str).size() + to_string(taxamount).size();
-    int sizeoftotal = string("Grand Total: " + str).size() + to_string(grandtotal).size();
+    int sizeoftaxamount = string("Tax Amount: " + str + to_string(taxamount)).size();
+    int sizeoftotal = string("Grand Total: " + str + to_string(grandtotal)).size();
     int maxsizeofitem {};
     for(int i=0;i<numberofitem;i++){
         if(string(to_string(i+1) + '.' + ptr[i] + ": " + str + to_string(cost[i])).size()>maxsizeofitem){
