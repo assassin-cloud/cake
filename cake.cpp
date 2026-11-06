@@ -60,6 +60,7 @@ void receipt(string name, double amount, string ptr[], double cost[],int numbero
         }
     }
     width+=string("Discounted Price:").size();
+    cout << fixed << setprecision(2);
     cout << "|" << setfill('-') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     cout << "|" << left << setw(width) << "RECEIPT" << "|" << endl;
@@ -68,23 +69,23 @@ void receipt(string name, double amount, string ptr[], double cost[],int numbero
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     for(int i=0;i<numberofitem;i++){
-        cout << "|" << left << setw(width-string(str + to_string(originalprice[i])).size()) << string(to_string(i+1) + '.' + ptr[i] + ":") << right << string(str + to_string(originalprice[i])) << "|" << endl;
+        cout << "|" << left << setw(width-string(str+to_string((static_cast<int>(originalprice[i])))+"|").size()-2) << string(to_string(i+1) + '.' + ptr[i] + ":") << right << str << originalprice[i] << "|" << endl;
         if(discount[i]!=0.00){
-            cout << "|" << left << setw(width-string(to_string(discount[i]) + "%").size()) << "Discount:" << right << string(to_string(discount[i]) + "%") << "|" << endl;
-            cout << "|" << left << setw(width-string(str + to_string(cost[i])).size()) << "Discounted Price:" << right << string(str + to_string(cost[i])) << "|" << endl;
+            cout << "|" << left << setw(width-string(to_string(static_cast<int>(discount[i])) + "%" + "|").size()-2) << "Discount:" << right << discount[i] << "%" << "|" << endl;
+            cout << "|" << left << setw(width-string(str+to_string((static_cast<int>(originalprice[i])))+"|").size()-2) << "Discounted Price:" << right << str << cost[i] << "|" << endl;
         }
         cout << "|" << setw(width+1) << "|" << endl;
     }
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     if(taxuserinput == 'y'){
-        cout << "|" << left << setw(width) << string("Subtotal: " + str + to_string(amount)) << "|" << endl;
-        cout << "|" << left << setw(width) << string("Tax Rate: " + to_string(taxrate) + "%") << "|" << endl;
-        cout << "|" << left << setw(width) << string("Tax Amount: " + str + to_string(taxamount)) << "|" << endl;
-        cout << "|" << left << setw(width) << string("Grand Total: " + str + to_string(grandtotal)) << "|" << endl;
+        cout << "|" << left << setw(width-string(str + to_string(static_cast<int>(amount)) + "|").size()-2) << "Subtotal: " << right << str << amount << "|" << endl;
+        cout << "|" << left << setw(width-string(to_string(static_cast<int>(taxrate)) + "%" + "|").size()-2) << "Tax Rate: " << right << taxrate << "%" << "|" << endl;
+        cout << "|" << left << setw(width-string(str + to_string(static_cast<int>(taxamount)) + "|").size()-2) << "Tax Amount: " << right << str << taxamount << "|" << endl;
+        cout << "|" << left << setw(width-string(str + to_string(static_cast<int>(grandtotal)) + "|").size()-2) << "Grand Total: " << right << str << grandtotal << "|" << endl;
     }
     else{
-        cout << "|" << left << setw(width) << string("Grand Total: " + str + to_string(grandtotal)) << "|" << endl;
+        cout << "|" << left << setw(width-string(str + to_string(static_cast<int>(grandtotal)) + "|").size()-2) << "Grand Total: " << right << str << grandtotal << "|" << endl;
     } 
     cout << "|" << setfill('-') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ') << endl;
