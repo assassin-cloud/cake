@@ -4,10 +4,26 @@
 using namespace std;
 
 void mainmenu(){
-    cout << "+=======================+" << endl;
-    cout << "+    RECEIPT CREATOR    +" << endl;
-    cout << "+=======================+" << endl;
+    int titlesize = string("RECEIPT CREATOR").size();
+    cout << "|" << setfill('-') << setw(12+titlesize) << right << "|" << endl;
+    cout << setfill(' ');
+    cout << "|" << setw(6+titlesize) << "RECEIPT CREATOR" << setw(6) << right << "|" << endl;
+    cout << "|" << setfill('-') << setw(12+titlesize) << right << "|" << endl;
+    cout << setfill(' ');
     cout << "1. Create Receipt" << endl;
+    cout << "2. Option" << endl;
+    cout << "3. Exit" << endl;
+    cout << "Input:" << endl;
+}
+
+void optionmenu(string symbol){
+    int titlesize = string("OPTION").size();
+    cout << "|" << setfill('-') << setw(12+titlesize) << right << "|" << endl;
+    cout << setfill(' ');
+    cout << "|" << setw(6+titlesize) << "OPTION" << setw(6) << right << "|" << endl;
+    cout << "|" << setfill('-') << setw(12+titlesize) << right << "|" << endl;
+    cout << setfill(' ');
+    cout << "1. Change currency symbol (Current Symbol: " << symbol << " )" << endl;
     cout << "2. Exit" << endl;
     cout << "Input:" << endl;
 }
@@ -24,26 +40,20 @@ void cinbugfix(){
     cin.ignore(1000, '\n');
 }
 
-void receipt(string name, double amount, string ptr[], double cost[],int numberofitem, double discount[], double originalprice[], double taxrate, double taxamount, double grandtotal, char taxuserinput){
+void receipt(string name, double amount, string ptr[], double cost[],int numberofitem, double discount[], double originalprice[], double taxrate, double taxamount, double grandtotal, char taxuserinput, string str){
     int sizeofname = string("Name: ").size() + name.size();
-    int sizeofamount = string("Subtotal: $").size() + to_string(amount).size();
+    int sizeofamount = string("Subtotal: " + str).size() + to_string(amount).size();
     int sizeoftax = string("Tax Rate: " + to_string(taxrate) + "%").size();
-    int sizeoftaxamount = string("Tax Amount: $").size() + to_string(taxamount).size();
-    int sizeoftotal = string("Grand Total: $").size() + to_string(grandtotal).size();
+    int sizeoftaxamount = string("Tax Amount: " + str).size() + to_string(taxamount).size();
+    int sizeoftotal = string("Grand Total: " + str).size() + to_string(grandtotal).size();
     int maxsizeofitem {};
     for(int i=0;i<numberofitem;i++){
-        if(string(to_string(i+1) + '.' + ptr[i] + ": " + "$" + to_string(cost[i])).size()>maxsizeofitem){
-            maxsizeofitem = string(to_string(i+1) + '.' + ptr[i] + ": " + "$" + to_string(cost[i])).size();
+        if(string(to_string(i+1) + '.' + ptr[i] + ": " + str + to_string(cost[i])).size()>maxsizeofitem){
+            maxsizeofitem = string(to_string(i+1) + '.' + ptr[i] + ": " + str + to_string(cost[i])).size();
         }
     }
-    int *p = new int[6];
+    int p[6]{sizeofname, sizeofamount, maxsizeofitem, sizeoftax, sizeoftaxamount, sizeoftotal};
     int width {};
-    p[0] = sizeofname;
-    p[1] = sizeofamount;
-    p[2] = maxsizeofitem;
-    p[3] = sizeoftax;
-    p[4] = sizeoftaxamount;
-    p[5] = sizeoftotal;
     for(int i=0;i<6;i++){
         if(p[i]>width){
             width = p[i];
@@ -58,28 +68,26 @@ void receipt(string name, double amount, string ptr[], double cost[],int numbero
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     for(int i=0;i<numberofitem;i++){
-        cout << "|" << left << setw(width-string("$" + to_string(originalprice[i])).size()) << string(to_string(i+1) + '.' + ptr[i] + ":") << right << string("$" + to_string(originalprice[i])) << "|" << endl;
+        cout << "|" << left << setw(width-string(str + to_string(originalprice[i])).size()) << string(to_string(i+1) + '.' + ptr[i] + ":") << right << string(str + to_string(originalprice[i])) << "|" << endl;
         if(discount[i]!=0.00){
-            cout << "|" << left << setw(width-string(to_string(discount[i]) + '%').size()) << "Discount:" << right << string(to_string(discount[i]) + "%") << "|" << endl;
-            cout << "|" << left << setw(width-string('$' + to_string(cost[i])).size()) << "Discounted Price:" << right << string("$" + to_string(cost[i])) << "|" << endl;
+            cout << "|" << left << setw(width-string(to_string(discount[i]) + "%").size()) << "Discount:" << right << string(to_string(discount[i]) + "%") << "|" << endl;
+            cout << "|" << left << setw(width-string(str + to_string(cost[i])).size()) << "Discounted Price:" << right << string(str + to_string(cost[i])) << "|" << endl;
         }
         cout << "|" << setw(width+1) << "|" << endl;
     }
     cout << "|" << setfill('*') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ');
     if(taxuserinput == 'y'){
-        cout << "|" << left << setw(width) << string("Subtotal: $" + to_string(amount)) << "|" << endl;
+        cout << "|" << left << setw(width) << string("Subtotal: " + str + to_string(amount)) << "|" << endl;
         cout << "|" << left << setw(width) << string("Tax Rate: " + to_string(taxrate) + "%") << "|" << endl;
-        cout << "|" << left << setw(width) << string("Tax Amount: $" + to_string(taxamount)) << "|" << endl;
-        cout << "|" << left << setw(width) << string("Grand Total: $" + to_string(grandtotal)) << "|" << endl;
+        cout << "|" << left << setw(width) << string("Tax Amount: " + str + to_string(taxamount)) << "|" << endl;
+        cout << "|" << left << setw(width) << string("Grand Total: " + str + to_string(grandtotal)) << "|" << endl;
     }
     else{
-        cout << "|" << left << setw(width) << string("Grand Total: $" + to_string(grandtotal)) << "|" << endl;
+        cout << "|" << left << setw(width) << string("Grand Total: " + str + to_string(grandtotal)) << "|" << endl;
     } 
     cout << "|" << setfill('-') << setw(width+1) << right << "|" << endl;
     cout << setfill(' ') << endl;
-    delete[] p;
-    p = nullptr;
 }
 
 void wait(){
@@ -89,6 +97,7 @@ void wait(){
 }
 
 int main(){
+    string symbol {"$"};
     while(true){
         mainmenu();
         int userinput {takeinput()};
@@ -175,7 +184,7 @@ int main(){
                                                     cout << "Discount can't be greater than 100 or less than or equal to 0" << endl;
                                                 }
                                                 else{
-                                                    ptr[indexofitem] *= (1.0-(discount[indexofitem]/100.0));
+                                                    ptr[indexofitem] = originalprice[indexofitem]* (1.0-(discount[indexofitem]/100.0));
                                                 }
                                             }
                                         }
@@ -194,23 +203,35 @@ int main(){
                                 double taxamount {};
                                 double grandtotal {};
                                 if(taxuserinput=='y'){
-                                    cout << "Please input tax rate e.g 18%(don't include % sign) or default(5%):" << endl;
-                                    cin >> taxrate;
-                                    if(taxrate>100 || taxrate<0){
-                                        cout << "Tax rate can't be less than 0 or greater than 100!" << endl;
-                                    }
-                                    else{
-                                        taxamount = subtotal*(taxrate/100);
-                                        grandtotal = subtotal+taxamount;
+                                    while(true){
+                                        cout << "Please input tax rate e.g 18%(don't include % sign) or default(5%):" << endl;
+                                        cin >> taxrate;
+                                        if(cin.fail()){
+                                            cinbugfix();
+                                            continue;
+                                        }
+                                        else{
+                                            if(taxrate>100 || taxrate<0){
+                                                cout << "Tax rate can't be less than 0 or greater than 100!" << endl;
+                                                continue;
+                                            }
+                                            else{
+                                                taxamount = subtotal*(taxrate/100);
+                                                grandtotal = subtotal+taxamount;
+                                                break;
+                                            }
+                                        }
                                     }
                                 }
                                 else{
                                     grandtotal = subtotal;
                                 }
-                                receipt(name, subtotal, p, ptr, numberofitem, discount, originalprice, taxrate, taxamount, grandtotal, taxuserinput);
+                                receipt(name, subtotal, p, ptr, numberofitem, discount, originalprice, taxrate, taxamount, grandtotal, taxuserinput, symbol);
                                 wait();
                                 delete[] originalprice;
                                 originalprice = nullptr;
+                                delete[] discount;
+                                discount = nullptr;
                             }
                             delete[] ptr;
                             ptr = nullptr;
@@ -221,6 +242,42 @@ int main(){
                 }
             }
             else if(userinput == 2){
+                while(true){
+                    optionmenu(symbol);
+                    int optioninput {takeinput()};
+                    if(cin.fail()){
+                        cinbugfix();
+                    }
+                    else{
+                        if(optioninput == 1){
+                            cout << "Type a new symbol:" << endl;
+                            string new_symbol;
+                            cin >> new_symbol;
+                            if(cin.fail()){
+                                cinbugfix();
+                                continue;
+                            }
+                            else{
+                                if(new_symbol.size()>4){
+                                    cout << "Currency symbol can only be less than 3 letters/char!(UTF-8 input is not supported for now)" << endl;
+                                    continue;
+                                }
+                                else{
+                                    symbol = new_symbol;
+                                    cout << "Currency symbol has been changed!" << endl;
+                                }
+                            }
+                        }
+                        else if(optioninput == 2){
+                            break;
+                        }
+                        else{
+                            cout << "Invalid Input!" << endl;
+                        }
+                    }
+                }
+            }
+            else if(userinput == 3){
                 break;
             }
             else{
