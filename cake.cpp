@@ -258,8 +258,8 @@ int main(){
                                 continue;
                             }
                             else{
-                                if(new_symbol.size()>4){
-                                    cout << "Currency symbol can only be less than 3 letters/char!(UTF-8 input is not supported for now)" << endl;
+                                if(new_symbol.size()>3 ||new_symbol.empty()){
+                                    cout << "Currency symbol can only be less than 3 letters/char! or empty(UTF-8 input is not supported for now)" << endl;
                                     continue;
                                 }
                                 else{
